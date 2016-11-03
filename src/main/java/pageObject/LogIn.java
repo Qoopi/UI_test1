@@ -8,6 +8,10 @@ public class LogIn {
     private WebDriver driver;
     public LogIn(WebDriver driver){this.driver = driver;}
 
+    public void openLogInPage(){
+        driver.get("http://soft.it-hillel.com.ua:8080/login.jsp");
+    }
+
     public void enterLogin(){
         driver.findElement(By.xpath("//input[@id='login-form-username']")).sendKeys("Geloksmmm");
     }
