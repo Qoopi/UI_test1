@@ -2,23 +2,39 @@ package pageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.RemoteDriverManager;
+import ru.yandex.qatools.allure.annotations.Step;
+import utils.WaitsAsserts;
+
 
 public class LogIn {
-
     private WebDriver driver;
-    public LogIn(WebDriver driver){this.driver = driver;}
+        WaitsAsserts waits_asserts = new WaitsAsserts();
 
-    public void openLogInPage(){
-        driver.get("http://soft.it-hillel.com.ua:8080/login.jsp");
-    }
+        public LogIn() {
+            this.driver = RemoteDriverManager.getDriver();
 
-    public void enterLogin(){
-        driver.findElement(By.xpath("//input[@id='login-form-username']")).sendKeys("Geloksmmm");
+        }
+
+        @Step("enter username")
+        public void enterLogin() {
+            String newTitle = "[VRC-";
+            String title = "Log in - JIRA";
+
+            driver.get("http://soft.it-hillel.com.ua:8080/login.jsp");
+            waits_asserts.assertByTitle(driver, title);
+            driver.findElement(By.id("login-form-username")).sendKeys("Geloksmmm");
+        }
+
+        @Step("enter password")
+        public void enterPassword() {
+            driver.findElement(By.id("login-form-password")).sendKeys("Q125478963q");
+        }
+
+        @Step("click login")
+        public void clickSubmit() {
+            driver.findElement(By.id("login-form-submit")).click();
+            waits_asserts.waitForClickableByXpath(driver, "//*[@id='logo']/a/img");
+        }
+
     }
-    public  void enterPassword(){
-        driver.findElement(By.xpath("//input[@id='login-form-password']")).sendKeys("Q125478963q");
-    }
-    public void clickSubmit(){
-        driver.findElement(By.xpath("//input[@id='login-form-submit']")).click();
-    }
-}

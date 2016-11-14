@@ -7,13 +7,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * риририри
- * Created by gelok on 03.11.2016.
- */
+
 public class MyUtils {
     public void makeScreenshot(String name, WebDriver driver, String date){
         sleep(1000);
@@ -24,7 +22,7 @@ public class MyUtils {
             e.printStackTrace();
         }
     }
-    public void sleep(int time){
+    public static void sleep(int time){
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {

@@ -1,34 +1,31 @@
 package pageObject;
 
-/**
- * Created by gelok on 03.11.2016.
- */
 
-import com.google.common.annotations.VisibleForTesting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.RemoteDriverManager;
+import ru.yandex.qatools.allure.annotations.Step;
 
 
-public class LogOut {
+    public class LogOut {
 
-    private WebDriver driver;
+        private WebDriver driver;
 
-    public LogOut(WebDriver driver) {
-        this.driver = driver;
+        public LogOut() {
+            this.driver = RemoteDriverManager.getDriver();
+        }
+
+        @Step("Logout")
+        public void logOutOf() {
+            driver.get("http://soft.it-hillel.com.ua:8080/secure/Dashboard.jspa");
+            WebElement logout = (new WebDriverWait(driver, 5))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header-details-user-fullname']")));
+            logout.click();
+            driver.findElement(By.xpath("//*[@id='log_out']")).click();
+
+        }
+
     }
-
-
-    public void LogOutOf() {
-        driver.get("http://soft.it-hillel.com.ua:8080/secure/Dashboard.jspa");
-        WebElement logout = (new WebDriverWait(driver, 5))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header-details-user-fullname']")));
-
-        logout.click();
-        driver.findElement(By.xpath("//*[@id='log_out']")).click();
-
-    }
-
-}
