@@ -1,8 +1,5 @@
 package pageObject;
 
-
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -29,7 +26,7 @@ public class UpdateISSUE extends MyUtils {
         scrollPageUp(driver);
 
         driver.findElement(By.xpath(".//*[@id='reporter-val']")).click();
-        driver.findElement(By.xpath(".//*[@id='reporter-field']")).sendKeys("a.a.piluck2 ", Keys.ENTER);
+        driver.findElement(By.xpath(".//*[@id='reporter-field']")).sendKeys("Geloksmmm", Keys.ENTER);
 
 
     }
@@ -64,7 +61,7 @@ public class UpdateISSUE extends MyUtils {
         comment.click();
         WebElement addComment = driver.findElement(By.xpath("//*[@id='comment']"));
 
-        addComment.sendKeys("This comment was added via WebDriver", Keys.CONTROL, Keys.ENTER);
+        addComment.sendKeys("Shit happens, twice", Keys.CONTROL, Keys.ENTER);
 
 
     }
@@ -80,7 +77,7 @@ public class UpdateISSUE extends MyUtils {
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='summary']")));
         changeIssueSummary.clear();
 
-        changeIssueSummary.sendKeys(" This title was changed via WebDriver", Keys.ENTER);
+        changeIssueSummary.sendKeys("Shit happens triple time!!", Keys.ENTER);
     }
 
     @Step("delete issue")

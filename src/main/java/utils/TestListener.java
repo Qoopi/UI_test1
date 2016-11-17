@@ -12,74 +12,112 @@ import ru.yandex.qatools.allure.annotations.Attachment;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+
 
 public class TestListener implements ITestListener {
 
-    @Attachment
-    public File captureScreenshot(WebDriver d) {
+    String currentDate;
+    String params;
+
+    public File captureScreenshot(WebDriver driver) {
         File file = null;
         try {
-            file = ((TakesScreenshot) d).getScreenshotAs(OutputType.FILE);
-
+            file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            screenshotToAllure(file);
         }catch (WebDriverException e){
             e.printStackTrace();
         }
         return file;
     }
 
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] screenshotToAllure(File screen) {
+        byte[] screenShot = new byte[0];
+        try {
+            screenShot = Files.readAllBytes(screen.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return screenShot;
+    }
+
+
     @Override
     public void onTestStart(ITestResult iTestResult) {
+
+        System.out.println("============onTestStart============");
+
 
     }
 
     @Override
     public void onTestSuccess(ITestResult tr) {
-        System.out.println("Screesnshot captured for test case:" + tr.getMethod().getMethodName());
-        File screen = captureScreenshot((WebDriver) RemoteDriverManager.getDriver());
+        System.out.println("============onTestSuccess============");
+        String pathSucceed = "target/screenshots/"+params+"/success/" + tr.getMethod().getMethodName() + ".png";
+
+        File screen = captureScreenshot(RemoteDriverManager.getDriver());
         try {
-            FileUtils.copyFile(screen, new File("/tmp/test/" + tr.getMethod().getMethodName() + "SUCCESS.png"));
+            FileUtils.copyFile(screen, new File(pathSucceed));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Screesnshot captured for test case:" + tr.getMethod().getMethodName());
     }
+
 
     @Override
     public void onTestFailure(ITestResult tr) {
-        WebDriver driver = RemoteDriverManager.getDriver();
+        System.out.println("============onTestFailure============");
+        String pathFailed = "target/screenshots/"+params+"/failed/" + tr.getMethod().getMethodName() + ".png";
+
+        File screen = captureScreenshot(RemoteDriverManager.getDriver());
+        try {
+            FileUtils.copyFile(screen, new File(pathFailed));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Screesnshot captured for test case:" + tr.getMethod().getMethodName());
-            File screen = captureScreenshot((WebDriver) RemoteDriverManager.getDriver());
-            try {
-                FileUtils.copyFile(screen, new File("/tmp/test/" + tr.getMethod().getMethodName() + "FAILED.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            driver.quit();
-
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
+        System.out.println("============onTestSkipped============");
 
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+        System.out.println("============onTestFailedButWithinSuccessPercentage============");
 
     }
 
     @Override
     public void onStart(ITestContext iTestContext) {
+        System.out.println("============onStart============");
         String browserName = iTestContext.getCurrentXmlTest().getParameter("browserName");
+       // String useGrid = iTestContext.getCurrentXmlTest().getParameter("useGrid");
+        //Boolean boo = useGrid.contentEquals("true");
         WebDriver driver = RemoteWebDriverFactory.createInstance(browserName);
         RemoteDriverManager.setWebDriver(driver);
+
+
+       // MyUtils helpers = new MyUtils();
+      //  currentDate = helpers.getTime();
+
+        params = currentDate+"-"+browserName;
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
+        System.out.println("============onFinish============");
         WebDriver driver = RemoteDriverManager.getDriver();
         if (driver != null) {
             driver.quit();
         }
+
+
     }
 }

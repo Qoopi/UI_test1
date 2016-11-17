@@ -28,7 +28,7 @@ public class UI_tests_Jira {
         @TestCaseId("Functions")
         @Features("CreateIssue")
         @Stories({"SomeStory"})
-        @Test
+        @Test(priority = 1)
         public void createIssue() {
             LogIn logIn = new LogIn();
             logIn.enterLogin();
@@ -36,6 +36,7 @@ public class UI_tests_Jira {
             logIn.clickSubmit();
 
             CreateISSUE createISSUE = new CreateISSUE();
+            createISSUE.OpenCreateISSUE();
             createISSUE .createBug();
             createISSUE .enterProject();
             createISSUE .createSummary();
@@ -51,14 +52,15 @@ public class UI_tests_Jira {
         @TestCaseId("Functions")
         @Features("CreateIssue")
         @Stories({"SomeStory"})
-        @Test(groups = {"CreateIssueFunctions"})
-        public void updateIssueAddComment() {
+        @Test(groups = {"CreateIssueFunctions"}, priority = 2)
+        public void AddComment() {
             LogIn logIn = new LogIn();
             logIn.enterLogin();
             logIn.enterPassword();
             logIn.clickSubmit();
 
             CreateISSUE createISSUE = new CreateISSUE();
+            createISSUE.OpenCreateISSUE();
             createISSUE .createBug();
             createISSUE .enterProject();
             createISSUE .createSummary();
@@ -77,8 +79,8 @@ public class UI_tests_Jira {
         @TestCaseId("Functions")
         @Features("CreateIssue")
         @Stories({"SomeStory"})
-        @Test(groups = {"CreateIssueFunctions"})
-        public void updateReporter() {
+        @Test(groups = {"CreateIssueFunctions"}, priority = 2)
+        public void changeReporter() {
             LogIn logIn = new LogIn();
             logIn.enterLogin();
             logIn.enterPassword();
@@ -103,8 +105,8 @@ public class UI_tests_Jira {
         @TestCaseId("Functions")
         @Features("CreateIssue")
         @Stories({"SomeStory"})
-        @Test(groups = {"CreateIssueFunctions"})
-        public void updatePriority() {
+        @Test(groups = {"CreateIssueFunctions"}, priority = 2)
+        public void changePriority() {
             LogIn logIn = new LogIn();
             logIn.enterLogin();
             logIn.enterPassword();
@@ -130,8 +132,8 @@ public class UI_tests_Jira {
         @TestCaseId("Functions")
         @Features("CreateIssue")
         @Stories({"SomeStory"})
-        @Test(groups = {"CreateIssueFunctions"})
-        public void updateIssueTitle() {
+        @Test(groups = {"CreateIssueFunctions"}, priority = 2)
+        public void changeTitle() {
             LogIn logIn = new LogIn();
             logIn.enterLogin();
             logIn.enterPassword();
@@ -145,7 +147,7 @@ public class UI_tests_Jira {
 
             UpdateISSUE updateIssuePage = new UpdateISSUE();
             updateIssuePage.getIssueKey();
-            updateIssuePage.updatePriority();
+            updateIssuePage.updateIssueTitle();
             updateIssuePage.deleteIssue();
 
 

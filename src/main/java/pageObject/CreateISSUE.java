@@ -23,7 +23,9 @@ public class CreateISSUE {
         public CreateISSUE() {
             this.driver = RemoteDriverManager.getDriver();
         }
-
+        public void OpenCreateISSUE(){
+            driver.get("http://soft.it-hillel.com.ua:8080/secure/Dashboard.jspa");
+        }
         @Step("create Bug")
         public void createBug() {
             waitsAsserts.waitForVisibilityByXpath(driver, "//*[@id='create_link']");
@@ -40,7 +42,7 @@ public class CreateISSUE {
 
         }
 
-        @Step("enter project")
+        @Step("Get project")
         public void enterProject() {
             String projectFieldXpath = "//*[@id=\"project-field\"]";
 
@@ -52,7 +54,7 @@ public class CreateISSUE {
             driver.findElement(By.xpath(projectFieldXpath)).sendKeys("QAAUT", Keys.ENTER);
         }
 
-        @Step("create summary")
+        @Step("Get summary")
         public void createSummary() {
             waitsAsserts.waitForVisibilityByXpath(driver, "//*[@id='summary']");
             waitsAsserts.waitForClickableByXpath(driver, "//*[@id='summary']");
@@ -60,15 +62,15 @@ public class CreateISSUE {
 
             WebElement summary = driver.findElement(By.xpath("//*[@id='summary']"));
             summary.clear();
-            summary.sendKeys(" This summary was created via WebDriver");
+            summary.sendKeys(" Shit happens!!");
 
         }
 
-        @Step("create assignee")
+        @Step("Get assignee")
         public void createAssignee() {
             WebElement assignee = driver.findElement(By.xpath("//*[@id='assignee-field']"));
             assignee.clear();
-            assignee.sendKeys("katherinebilous", Keys.ENTER);
+            assignee.sendKeys("Geloksmmm", Keys.ENTER);
 
         }
 
